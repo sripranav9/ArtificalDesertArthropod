@@ -11,6 +11,8 @@ photocell = analogio.AnalogIn(board.A1)
 def analog_voltage(adc):
     return adc.value / 65535 * adc.reference_voltage
 
+ambientLight = []
+
 # Main loop reads value and voltage every second and prints them out.
 while True:
     # Read the value, then the voltage.
@@ -19,4 +21,6 @@ while True:
     # Print the values:
     print('Photocell value: {0} voltage: {1}V'.format(val, volts))
     # Delay for a second and repeat!
+    ambientLight.append(val)
+    print(ambientLight)
     time.sleep(5.0)
