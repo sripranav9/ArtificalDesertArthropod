@@ -12,8 +12,10 @@ def analog_voltage(adc):
     return adc.value / 65535 * adc.reference_voltage
 
 ambientLight = []
-oldVal = 0
-newVal = 0
+oldVal = None
+newVal = None
+intDiff = 0
+mode = 0
 
 # Main loop reads value and voltage every second and prints them out.
 while True:
@@ -22,11 +24,25 @@ while True:
     volts = analog_voltage(photocell)
     # Print the values:
     print('Photocell value: {0} voltage: {1}V'.format(newVal, volts))
+
     # Calculate the difference in intensity
     if oldVal is not None:
-        intDifference = newVal - oldVal
-    print(intDifference)
-    # Update the latest measured intensity
+        intDiff = newVal - oldVal
+        print(intDiff)
+
+    # Update the latested measured value
     oldVal = newVal
-    # Wait for five seconds to repeat
-    time.sleep(5.0)
+
+    # Continue if the difference is smaller than 3000
+    if abs(intDiff) <3000:
+        print(mode)
+        time.sleep(2.0)
+
+
+    # If the difference is larger than 3000
+    # Change mode, wait for 10 seconds, mode changes back to initial
+    else:
+        mode = 1
+        print(mode)
+        time.sleep(10.0)
+        mode = 0
