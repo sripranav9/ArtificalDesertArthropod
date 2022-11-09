@@ -1,4 +1,4 @@
-### SparkFun Microphone Breakout
+## SparkFun Microphone Breakout
 
 **Materials Needed**
 * Feather M4 Express
