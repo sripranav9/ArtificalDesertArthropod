@@ -7,7 +7,7 @@ from adafruit_simplemath import map_range
 
 # ------------
 # Intialize the Motors
-#kit = MotorKit(i2c=board.I2C())
+kit = MotorKit(i2c=board.I2C())
 
 # Initialize analog input connected to photocell.
 microphone = analogio.AnalogIn(board.A5)
@@ -33,6 +33,7 @@ def get_voltage(pin):
 potentiomter_threshold_min = 450.0
 potentiomter_threshold_max = 800.0
 
+#sound sensor variables
 # initilialize variables to store the values in the while loop for comparison
 oldSoundVal = 0
 newSoundVal = 0
@@ -40,7 +41,6 @@ newSoundVal = 0
 
 # 0 for default checking the values, once there is a difference, go to mode 1
 # mode 1 - waits for sometime for the arthropod to perform the action and then go ahead for checking again
-#sound sensor variables
 soundDiff = 0
 soundMode = 0
 sleepTime = 5.0  # for mode 1 - seconds to wait for
@@ -52,14 +52,11 @@ count = 0
 oldVal = None
 newVal = None
 intDiff = 0
-
-
 #testing time monotonic
 startTime = time.monotonic()
 
 # Main loop reads value and voltage every second and prints them out.
 while True:
-
 
     # --
     # microphone
@@ -104,18 +101,14 @@ while True:
         print("Change in sound detected, value = ", soundDiff)
         soundMode = 1;
         print('Activated StandBy','\n')
-        #kit.motor1.throttle = 0.75
-        #kit.motor3.throttle = 0.75
-        #time.sleep(5.0)
-        time.sleep(sleepTime)
+        kit.motor2.throttle = -0.75
+        kit.motor3.throttle = -0.75
+        time.sleep(sleepTime) # currently 5.0
         print('Deactivated StandBy')
     else:
-        #kit.motor1.throttle = -0.5
-        #kit.motor3.throttle = -0.5
-        #time.sleep(2)
+        kit.motor2.throttle = 0.5
+        kit.motor3.throttle = 0.5
         soundMode = 0
-        #print(soundDiff)
-        #time.sleep(0.5)
     
     # to skip the first extra value
     if (count == 0):
@@ -129,19 +122,19 @@ while True:
     if ((currTime - startTime) > 1.0 ):
         
         if abs(intDiff) > 3000:
-        #    kit.motor1.throttle = -0.50
-        #    kit.motor3.throttle = -0.50
             #mode = 1
             print("\nChange in light detected, value = ", intDiff)
             print('Activated StandBy (Mode 1)')
-        #    kit.motor1.throttle = 0.75
-        #    kit.motor3.throttle = 0.75
+            kit.motor2.throttle = -0.75
+            kit.motor3.throttle = -0.75
             time.sleep(5.0)
             print('Deactivated StandBy, checking for changes in light...\n')
 
 # If the difference is larger than 3000
 # Change mode, wait for 10 seconds, mode changes back to initial
         else:
+            kit.motor2.throttle = 0.50
+            kit.motor3.throttle = 0.50
             mode=0
             #time.sleep(1.0)
             #print(mode)
