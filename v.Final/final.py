@@ -1,10 +1,13 @@
-# *************************************
-# Artificial Arthropod
-# Group: Amy, Armaan, Injoo, Pranav
-# Desert Media Art, Fall 2022
-# Professor Mang
-# Date: 26 November 2022
-# *************************************
+# ============================================================================================
+#            -- Final Project, Desert Media Art --
+#                    Professor Michael Ang
+
+# Authors             : Amy, Armaan, Injoo, Pranav
+# Date Last Updated   : 26 November 2022
+# Description         : Arth-E - An autonomous robot that mimics desert arthropods by 
+#                       concentrating on the element of fear of human intervention using
+#                       light and sound stimuli
+# ============================================================================================
 
 from adafruit_motorkit import MotorKit
 import time
